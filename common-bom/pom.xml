@@ -1,0 +1,217 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.wet.api</groupId>
+  <artifactId>common-bom</artifactId>
+  <version>01.00.00.00-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>API Common BOM (Bill of Materials)</name>
+  <description>BOM for easy dependency management of Common API dependencies</description>
+
+  <properties>
+    <common.version>01.00.00.00-SNAPSHOT</common.version>
+    <commons.lang3.version>3.4</commons.lang3.version>
+    <commons.dbcp2.version>2.1.1</commons.dbcp2.version>
+    <dbunit.version>2.4.9</dbunit.version>
+    <h2.version>1.4.190</h2.version>
+    <hamcrest.version>2.0.0.0</hamcrest.version>
+    <hibernate.entitymanager.version>4.3.11.Final</hibernate.entitymanager.version>
+    <hibernate.validator.version>5.2.2.Final</hibernate.validator.version>
+    <spring.version>4.2.1.RELEASE</spring.version>
+    <jackson-databind.version>2.6.3</jackson-databind.version>
+    <javax.el.version>3.0.0</javax.el.version>
+    <javax.inject.version>1</javax.inject.version>
+    <jstl.version>1.2</jstl.version>
+    <joda.time.version>2.6</joda.time.version>
+    <junit.version>4.12</junit.version>
+    <mockito.version>1.10.19</mockito.version>
+    <mysql.version>5.1.25</mysql.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+
+      <!-- West Enterprise Common Dependencies -->
+      <dependency>
+        <groupId>com.wet.api</groupId>
+        <artifactId>common-dao</artifactId>
+        <version>${common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.wet.api</groupId>
+        <artifactId>common-model</artifactId>
+        <version>${common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.wet.api</groupId>
+        <artifactId>common-rest</artifactId>
+        <version>${common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.wet.api</groupId>
+        <artifactId>common-service</artifactId>
+        <version>${common.version}</version>
+      </dependency>
+  
+      <!-- Commons Dependencies -->
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons.lang3.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-dbcp2</artifactId>
+        <version>${commons.dbcp2.version}</version>
+      </dependency>
+
+      <!-- Logging Dependencies -->
+      <!-- Needed for dbunit - that's why it's in test scope for now -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.12</version>
+        <scope>test</scope>
+      </dependency>
+      		
+      <!-- Spring Dependecies -->
+      <!--<dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aspects</artifactId>
+        <version>${spring.version}</version>
+      </dependency>-->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-orm</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-tx</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+
+      <!-- JSP Dependencies -->
+      <dependency>
+        <groupId>jstl</groupId>
+        <artifactId>jstl</artifactId>
+        <version>${jstl.version}</version>
+      </dependency>
+
+      <!-- Hibernate Dependencies -->
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-entitymanager</artifactId>
+        <version>${hibernate.entitymanager.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>${hibernate.validator.version}</version>
+      </dependency>
+      <!--<dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-search</artifactId>
+        <version>${hibernate.version}</version>
+      </dependency>-->
+
+      <!-- Database Driver Dependencies -->
+      <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>${h2.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
+      </dependency>
+
+      <!-- Jackson JSON Mapper Dependencies -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson-databind.version}</version>
+      </dependency>
+
+      <!-- Other Dependencies -->
+      <dependency>
+        <groupId>javax.el</groupId>
+        <artifactId>javax.el-api</artifactId>
+        <version>${javax.el.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.inject</groupId>
+        <artifactId>javax.inject</artifactId>
+        <version>${javax.inject.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+        <version>${joda.time.version}</version>
+      </dependency>
+
+      <!-- Testing Dependencies -->
+      <dependency>
+        <groupId>org.dbunit</groupId>
+        <artifactId>dbunit</artifactId>
+        <version>${dbunit.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-junit</artifactId>
+        <version>${hamcrest.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockito.version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <distributionManagement>
+    <repository>
+      <id>wet-framework-releases</id>
+      <name>West Enterprise Technologies Framework Releases</name>
+      <url>http://nexus-westenterprise.rhcloud.com/nexus/content/repositories/wet-framework-releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>wet-framework-snapshots</id>
+      <name>West Enterprise Technologies Framework Snapshots</name>
+      <url>http://nexus-westenterprise.rhcloud.com/nexus/content/repositories/wet-framework-snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+</project>
