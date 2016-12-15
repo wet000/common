@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,21 +18,28 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import com.wet.api.common.model.DomainObject;
-import com.wet.api.common.rest.SpringRestClient;
+import com.wet.api.common.rest.RestClient;
 
-public abstract class AbstractSpringRestClient<T extends DomainObject> implements SpringRestClient<T> 
-{	
-	private final Class<T> type;
-	private final RestTemplate restTemplate;
+public abstract class AbstractSpringRestClient<T extends DomainObject> implements RestClient<T>
+{
+	protected Class<T> type;
+	protected  String baseUri;
 	
 	private String method;
 	private Map<String, Object> params;
 	private HttpEntity<String> entity;
+	private RestTemplate restTemplate;
 	
-	public AbstractSpringRestClient(Class<T> type)
+	protected abstract void setType();
+	protected abstract void setBaseUri();
+	
+	@PostConstruct
+	private void init()
 	{
-		this.type = type;
+		setType();
+		setBaseUri();
 		
+		// Setup rest template and message converters
 		List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
 		messageConverters.add(new MappingJackson2HttpMessageConverter());
 		
@@ -51,20 +60,51 @@ public abstract class AbstractSpringRestClient<T extends DomainObject> implement
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	    entity = new HttpEntity<String>(headers);
 	}
-	
+
 	protected void setMethod(String method)
 	{
 		this.method = method;
 	}
-	
+
 	protected void putParam(String field, Object value)
 	{
 		this.params.put(field, value);
 	}
-	
-	protected String constructUri()
+
+	protected void setBaseUri(String baseUri) 
 	{
-		StringBuilder sb = new StringBuilder(getBaseUri());
+		this.baseUri = baseUri;
+	}
+	
+	// Helper Wrapper Method
+//	protected ResponseEntity<T> getResponse()
+//	{
+//		return getResponse(constructUri());
+//	}
+	
+//	public ResponseEntity<T> getResponse(String uri)
+//	{
+//		if (this.params.isEmpty())
+//		{
+//			return getResponseEntity(uri, this.entity);
+//		}
+//		
+//		ResponseEntity<T> responseEntity = getResponseEntity(uri, this.entity, this.params);
+//		resetRestTemplate();
+//		
+//		return responseEntity;
+//	}
+	
+	@Override
+	public T get()
+	{
+		return get(constructUri());
+	}
+	
+	private String constructUri()
+	{
+		System.out.println("Constructing URI: ");
+		StringBuilder sb = new StringBuilder(baseUri);
 		sb.append(this.method).append("/?");
 		
 		int size = params.size();
@@ -80,20 +120,7 @@ public abstract class AbstractSpringRestClient<T extends DomainObject> implement
 		return sb.toString();
 	}
 	
-	// Helper Wrapper Method
-	protected T get()
-	{
-		return get(constructUri());
-	}
-	
-	// Helper Wrapper Method
-	protected ResponseEntity<T> getResponse()
-	{
-		return getResponse(constructUri());
-	}
-	
-	@Override
-	public T get(String uri)
+	private T get(String uri)
 	{
 		// In this implementation, headers are never empty because they are initialized 
 		// to include an accept header of APPLICATION_JSON. But this can be abstracted 
@@ -117,20 +144,6 @@ public abstract class AbstractSpringRestClient<T extends DomainObject> implement
 		resetRestTemplate();
 		
 		return body;
-	}
-	
-	@Override
-	public ResponseEntity<T> getResponse(String uri)
-	{
-		if (this.params.isEmpty())
-		{
-			return getResponseEntity(uri, this.entity);
-		}
-		
-		ResponseEntity<T> responseEntity = getResponseEntity(uri, this.entity, this.params);
-		resetRestTemplate();
-		
-		return responseEntity;
 	}
 	
 	private T getBody(String uri)
