@@ -7,7 +7,8 @@
  							http://www.springframework.org/schema/context
  							http://www.springframework.org/schema/context/spring-context.xsd">
  
-	<import resource="spring-entitymanager.xml"/>
+ 	<!-- Asterisk is needed to import spring-entitymanagers from multiple jars' classpaths -->
+ 	<import resource="classpath*:META-INF/spring/spring-entitymanager.xml" />
 	
 	<!-- Externalize some settings to a properties file outside the Spring configuration --> 
  	<context:property-placeholder location="classpath*:META-INF/spring/*.properties"/>
