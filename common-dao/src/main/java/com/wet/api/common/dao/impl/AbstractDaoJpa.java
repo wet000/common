@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.wet.api.common.model.DomainEntity;
 
 public abstract class AbstractDaoJpa<T extends DomainEntity> extends AbstractDao<T> 
@@ -17,8 +15,9 @@ public abstract class AbstractDaoJpa<T extends DomainEntity> extends AbstractDao
 	
 	protected abstract EntityManager getEntityManager();
 	
+	protected String transactionManager;
+	
 	@Override
-	@Transactional(readOnly=true)
 	public T find(long id) 
 	{
 		return getEntityManager().find(type, id);
@@ -26,14 +25,12 @@ public abstract class AbstractDaoJpa<T extends DomainEntity> extends AbstractDao
 
 	@Override
 	@SuppressWarnings("unchecked")
-	@Transactional(readOnly=true)
 	public List<T> findAll() 
 	{
 		return getEntityManager().createQuery("select o from " + type.getName() + " o").getResultList();
 	}
 
 	@Override
-	@Transactional
 	public void save(T object) 
 	{
 		if (object.getId() == 0)
@@ -47,7 +44,6 @@ public abstract class AbstractDaoJpa<T extends DomainEntity> extends AbstractDao
 	}
 
 	@Override
-	@Transactional
 	public void delete(T object) 
 	{
 		getEntityManager().remove(object);
