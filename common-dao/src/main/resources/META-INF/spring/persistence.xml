@@ -13,10 +13,11 @@
 		<class>com.wet.api.nutrition.model.Source</class>
 		<class>com.wet.api.nutrition.model.FoodGroup</class>
 		<class>com.wet.api.nutrition.model.NutrientGroup</class>
-		<class>com.wet.api.nutrition.model.UnitOfMeasurement</class>
+		<class>com.wet.api.nutrition.model.Unit</class>
 		<class>com.wet.api.nutrition.model.Food</class>
 		<class>com.wet.api.nutrition.model.Nutrient</class>
-		<class>com.wet.api.nutrition.model.NutritionFact</class>
+        <class>com.wet.api.nutrition.model.FoodMeasure</class>
+        <class>com.wet.api.nutrition.model.NutrientMeasure</class>
 		<class>com.wet.api.nutrition.model.usda.UsdaFoodSource</class>
 		<class>com.wet.api.nutrition.model.usda.UsdaNutrientSource</class>
 	</persistence-unit>
